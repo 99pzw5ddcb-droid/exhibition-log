@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exhibition Log v2.1</title>
+<style>
+:root{--bg:#efede6;--paper:#fbf9f4;--ink:#171817;--muted:#6c6a64;--line:#d2cec2;--deep:#20362f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif}
+header{position:sticky;top:0;background:rgba(239,237,230,.95);border-bottom:1px solid var(--line);padding:18px 5vw;z-index:10}
+header h1{margin:0;font:500 25px Georgia,"Yu Mincho",serif}
+main{width:min(1100px,92vw);margin:auto;padding:42px 0 80px}
+.hero{border-bottom:1px solid var(--line);padding-bottom:32px}
+.hero h2{font:500 clamp(36px,7vw,70px)/1.05 Georgia,"Yu Mincho",serif;margin:0 0 16px}
+.hero p{color:var(--muted);line-height:1.8;max-width:760px}
+.count{font:500 46px Georgia,serif;margin-top:25px}
+.note{border:1px solid var(--line);padding:14px;margin:22px 0;color:var(--muted);font-size:12px;line-height:1.7;background:var(--paper)}
+.search{width:100%;padding:15px;border:1px solid var(--line);background:var(--paper);font-size:16px;margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.card{background:var(--paper);border:1px solid var(--line)}
+.image{height:180px;background:#d5d1c6;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.image>span{position:absolute;left:13px;top:11px;font:12px Georgia,serif}
+.shape{position:absolute;width:58%;height:120%;left:22%;top:-12%;border:1px solid #555;border-radius:48%;transform:rotate(12deg)}
+.body{padding:18px}
+.place{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.card h2{font:500 29px/1.15 Georgia,"Yu Mincho",serif;margin:12px 0 5px}
+.original{font-size:11px;color:var(--muted);margin:0 0 14px}
+.artist{font-weight:700;margin:0 0 5px}
+.venue{font-size:13px;color:var(--muted);line-height:1.6}
+.summary{font-size:13px;line-height:1.75;color:#4d4c47;min-height:72px}
+.actions{display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin-top:15px}
+.actions button,.actions a{border:1px solid var(--line);background:transparent;padding:10px 8px;text-decoration:none;text-align:center;font-size:12px}
+.actions button.active{background:var(--ink);color:white;border-color:var(--ink)}
+.actions a{background:var(--deep);color:white;border-color:var(--deep)}
+@media(max-width:650px){
+ main{width:94vw;padding-top:30px}
+ .grid{grid-template-columns:1fr}
+ .image{height:150px}
+ .summary{min-height:0}
+}
+</style>
+</head>
+<body>
+<header><h1>Exhibition Log <small style="font-size:11px;color:var(--muted)">v2.1</small></h1></header>
+<main>
+<section class="hero">
+<h2>展覧会を、作品と同じように記録する。</h2>
+<p>世界の現代美術展を日本語で読み、現地鑑賞とオンライン鑑賞を分けて記録する試作版です。</p>
+<div class="count"><span id="count">8</span><small style="font:12px sans-serif;color:var(--muted);display:block">表示中の実在展覧会</small></div>
+</section>
+<div class="note">この版は、iPhoneのファイルプレビューでJavaScriptが止まっても展覧会が表示されるよう、8件の展覧会情報をHTML本体へ直接埋め込んでいます。写真と原文全文は転載していません。</div>
+<input id="search" class="search" placeholder="作家・会場・都市・展覧会名で検索" oninput="filterCards()">
+<section class="grid" id="grid">
+    <article class="card" data-text="Céline Mathieu Molten 溶けたもの Kunstverein für Mecklenburg und Vorpommern in Schwerin Schwerin, Germany">
+      <div class="image"><span>01</span><div class="shape"></div></div>
+      <div class="body">
+        <p class="place">Schwerin, Germany</p>
+        <h2>溶けたもの</h2>
+        <p class="original">Molten</p>
+        <p class="artist">Céline Mathieu</p>
+        <p class="venue">Kunstverein für Mecklenburg und Vorpommern in Schwerin<br>2026.04.26 — 07.12</p>
+        <p class="summary">電気、通信、残留磁気、金やアルミニウムなどを、交換・保存・変形の途中にあるものとして配置する展覧会。</p>
+        <div class="actions">
+          <button onclick="toggleButton(this)">見たい</button>
+          <button onclick="toggleButton(this)">見た</button>
+          <a href="https://artviewer.org/celine-mathieu-at-kunstverein-fur-mecklenburg-und-vorpommern-in-schwerin/" target="_blank" rel="noopener">元記事 ↗</a>
+        </div>
+      </div>
+    </article>
+    <article class="card" data-text="Jason Yates It Meant Something Before, But Now It Means Nothing 以前は意味があったが、今は何も意味しない Post Times New York, United States">
+      <div class="image"><span>02</span><div class="shape"></div></div>
+      <div class="body">
+        <p class="place">New York, United States</p>
+        <h2>以前は意味があったが、今は何も意味しない</h2>
+        <p class="original">It Meant Something Before, But Now It Means Nothing</p>
+        <p class="artist">Jason Yates</p>
+        <p class="venue">Post Times<br>2026.05.29 — 07.25</p>
+        <p class="summary">アメリカの玩具や大衆文化の記号を、共有された意味が失われた後の記憶の残骸として扱う展覧会。</p>
+        <div class="actions">
+          <button onclick="toggleButton(this)">見たい</button>
+          <button onclick="toggleButton(this)">見た</button>
+          <a href="https://artviewer.org/jason-yates-at-post-times-new-york/" target="_blank" rel="noopener">元記事 ↗</a>
+        </div>
+      </div>
+    </article>
+    <article class="card" data-text="Petar Nakov OT OT Sarieva Plovdiv, Bulgaria">
+      <div class="image"><span>03</span><div class="shape"></div></div>
+      <div class="body">
+        <p class="place">Plovdiv, Bulgaria</p>
+        <h2>OT</h2>
+        <p class="original">OT</p>
+        <p class="artist">Petar Nakov</p>
+        <p class="venue">Sarieva<br>2026.04.30 — 07.31</p>
+        <p class="summary">鉄筋による構造体を中心に、彫刻を独立した物体ではなく空間を編む関係として捉える展示。</p>
+        <div class="actions">
+          <button onclick="toggleButton(this)">見たい</button>
+          <button onclick="toggleButton(this)">見た</button>
+          <a href="https://artviewer.org/petar-nakov-at-sarieva-plovidv/" target="_blank" rel="noopener">元記事 ↗</a>
+        </div>
+      </div>
+    </article>
+    <article class="card" data-text="Paula Breuer wet wings 濡れた翼 Studio Hanniball Berlin, Germany">
+      <div class="image"><span>04</span><div class="shape"></div></div>
+      <div class="body">
+        <p class="place">Berlin, Germany</p>
+        <h2>濡れた翼</h2>
+        <p class="original">wet wings</p>
+        <p class="artist">Paula Breuer</p>
+        <p class="venue">Studio Hanniball<br>2026.06.25 — 07.25</p>
+        <p class="summary">変態の途中にある生き物の濡れた翼を、成長期の不安定さに重ねる絵画・ドローイング・立体の展示。</p>
+        <div class="actions">
+          <button onclick="toggleButton(this)">見たい</button>
+          <button onclick="toggleButton(this)">見た</button>
+          <a href="https://artviewer.org/paula-breuer-at-studio-hanniball-berlin/" target="_blank" rel="noopener">元記事 ↗</a>
+        </div>
+      </div>
+    </article>
+    <article class="card" data-text="Satoru Kurata Every Day, Mostly Night, Sometimes Daylight 毎日、たいてい夜、ときどき昼の光 Triangolo Cremona, Italy">
+      <div class="image"><span>05</span><div class="shape"></div></div>
+      <div class="body">
+        <p class="place">Cremona, Italy</p>
+        <h2>毎日、たいてい夜、ときどき昼の光</h2>
+        <p class="original">Every Day, Mostly Night, Sometimes Daylight</p>
+        <p class="artist">Satoru Kurata</p>
+        <p class="venue">Triangolo<br>2026.06.06 — 08.01</p>
+        <p class="summary">人間と動物の間を移る像、記憶、夜明けや黄昏の光を描く油彩展。</p>
+        <div class="actions">
+          <button onclick="toggleButton(this)">見たい</button>
+          <button onclick="toggleButton(this)">見た</button>
+          <a href="https://artviewer.org/satoru-kurata-at-triangolo-cremona/" target="_blank" rel="noopener">元記事 ↗</a>
+        </div>
+      </div>
+    </article>
+    <article class="card" data-text="Julie Béna Lure 誘惑／おとり Museum of Contemporary Art Zagreb, Croatia">
+      <div class="image"><span>06</span><div class="shape"></div></div>
+      <div class="body">
+        <p class="place">Zagreb, Croatia</p>
+        <h2>誘惑／おとり</h2>
+        <p class="original">Lure</p>
+        <p class="artist">Julie Béna</p>
+        <p class="venue">Museum of Contemporary Art<br>2026.06.11 — 09.06</p>
+        <p class="summary">移動サーカスのような会場に道化師、分身、怪物的な人物が現れる映像・パフォーマンス・彫刻の展示。</p>
+        <div class="actions">
+          <button onclick="toggleButton(this)">見たい</button>
+          <button onclick="toggleButton(this)">見た</button>
+          <a href="https://artviewer.org/julie-bena-at-museum-of-contemporary-art-zagreb/" target="_blank" rel="noopener">元記事 ↗</a>
+        </div>
+      </div>
+    </article>
+    <article class="card" data-text="Ann Zhao Spillover こぼれ出し Empty Gallery Hong Kong, China">
+      <div class="image"><span>07</span><div class="shape"></div></div>
+      <div class="body">
+        <p class="place">Hong Kong, China</p>
+        <h2>こぼれ出し</h2>
+        <p class="original">Spillover</p>
+        <p class="artist">Ann Zhao</p>
+        <p class="venue">Empty Gallery<br>2026.07.04 — 09.05</p>
+        <p class="summary">写真、過去の絵画、その反復を通じて、制作しない時間や芸術家という役割を問い直す展示。</p>
+        <div class="actions">
+          <button onclick="toggleButton(this)">見たい</button>
+          <button onclick="toggleButton(this)">見た</button>
+          <a href="https://artviewer.org/ann-zhao-at-empty-gallery-hong-kong/" target="_blank" rel="noopener">元記事 ↗</a>
+        </div>
+      </div>
+    </article>
+    <article class="card" data-text="June Crespo MÁS GRAVES より重く、より低く Kunsthalle Lissabon Lisbon, Portugal">
+      <div class="image"><span>08</span><div class="shape"></div></div>
+      <div class="body">
+        <p class="place">Lisbon, Portugal</p>
+        <h2>より重く、より低く</h2>
+        <p class="original">MÁS GRAVES</p>
+        <p class="artist">June Crespo</p>
+        <p class="venue">Kunsthalle Lissabon<br>2026.06.24 — 09.05</p>
+        <p class="summary">重力・重量と低い音域を重ね、地下空間に大型彫刻と低周波的な音を組み込む展示。</p>
+        <div class="actions">
+          <button onclick="toggleButton(this)">見たい</button>
+          <button onclick="toggleButton(this)">見た</button>
+          <a href="https://artviewer.org/june-crespo-at-kunsthalle-lissabon-lisbon/" target="_blank" rel="noopener">元記事 ↗</a>
+        </div>
+      </div>
+    </article></section>
+</main>
+<script>
+function toggleButton(btn){
+ btn.classList.toggle('active');
+ try{localStorage.setItem('btn-'+btn.closest('.card').querySelector('.artist').textContent+'-'+btn.textContent,btn.classList.contains('active'))}catch(e){}
+}
+function filterCards(){
+ const q=document.getElementById('search').value.toLowerCase();
+ let n=0;
+ document.querySelectorAll('.card').forEach(card=>{
+  const show=card.dataset.text.toLowerCase().includes(q);
+  card.style.display=show?'':'none'; if(show)n++;
+ });
+ document.getElementById('count').textContent=n;
+}
+try{
+ document.querySelectorAll('.card').forEach(card=>{
+  card.querySelectorAll('button').forEach(btn=>{
+   const key='btn-'+card.querySelector('.artist').textContent+'-'+btn.textContent;
+   if(localStorage.getItem(key)==='true')btn.classList.add('active');
+  });
+ });
+}catch(e){}
+</script>
+</body>
+</html>
